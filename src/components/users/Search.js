@@ -1,14 +1,27 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export class Search extends Component {
+    static propTypes = {
+        searchUsers: PropTypes.func.isRequired,
+        setAlert: PropTypes.func.isRequired,
+    }
     state = {
         text: ''
     };
 
     onSubmit = e => {
         e.preventDefault();
+        if (this.state.text.trim() === '') {
+            this.props.setAlert('Please enter something', 'danger')
+        } else {
+            this.props.searchUsers(this.state.text);
+            this.setState({ text: '' });
+        }
+
     };
     onChange = e => this.setState({ [e.target.name]: e.target.value });
+
 
     render() {
         return (
