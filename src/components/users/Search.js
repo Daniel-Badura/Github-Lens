@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 export class Search extends Component {
     static propTypes = {
         searchUsers: PropTypes.func.isRequired,
+        clearUsers: PropTypes.func.isRequired,
+        showClear: PropTypes.bool.isRequired,
         setAlert: PropTypes.func.isRequired,
     }
     state = {
@@ -40,6 +42,8 @@ export class Search extends Component {
                         id=""
                         className="btn btn-block btn-success" />
                 </form>
+                {this.props.showClear && (<button className="btn btn-success btn-block" onClick={this.props.clearUsers}> Clear Search</button>)}
+
             </div>
         )
     }
