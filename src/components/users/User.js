@@ -1,17 +1,17 @@
-import React, { Fragment, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import React, { Fragment, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import Spinner from 'prop-types';
 import PropTypes from 'prop-types';
-import Repos from '../repos/Repos'
+import Repos from '../repos/Repos';
 
 
-function User({ getUser, getUserRepos, loading, user, repos }) {
-    const { login } = useParams()
-
+const User = ({ user, getUser, getUserRepos, loading, repos, match }) => {
+    let { login } = useParams();
     useEffect(() => {
-        getUser(login)
-        getUserRepos(login)
-    }, [])
+        getUser(login);
+        getUserRepos(login);
+        // eslint-disable-next-line
+    }, []);
     const {
         name,
         avatar_url,
@@ -77,14 +77,14 @@ function User({ getUser, getUserRepos, loading, user, repos }) {
             <div className="badge badge-dark">Public Gists: {public_gists} </div>
         </div>
         <Repos repos={repos} />
-    </Fragment>
-}
+    </Fragment>;
+};
 User.propTypes = {
     loading: PropTypes.bool,
     user: PropTypes.object.isRequired,
     repos: PropTypes.array.isRequired,
     getUser: PropTypes.func.isRequired,
     getUserRepos: PropTypes.func.isRequired
-}
-export default User
+};
+export default User;
 

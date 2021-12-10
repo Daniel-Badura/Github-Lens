@@ -16,6 +16,6 @@ const ReposItem = ({ repo: { name, html_url } }) => {
 }
 
 ReposItem.propTypes = {
-    user: PropTypes.object.isRequired
+    repo: PropTypes.object.isRequired
 }
 export default ReposItem
