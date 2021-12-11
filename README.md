@@ -1,3 +1,9 @@
+## Github Lens
+
+# Application to search github users
+
+based on Brad Traversy guide - React Front to Back
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
