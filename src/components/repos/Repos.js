@@ -6,7 +6,7 @@ const Repos = ({ repos }) => {
         style={repoStyle}>
         {
             repos.map(repo => (
-                <ReposItem repostkey={repo.id} repo={repo} />))}
+                <ReposItem key={repo.id} repo={repo} />))}
     </div>);
 };
 
