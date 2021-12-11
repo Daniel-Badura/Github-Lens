@@ -24,7 +24,7 @@ const App = () => {
                 <Route exact path='/' element={<Home />} />
                 <Route exact path='/about' element={<About />} />
                 <Route exact path='/user/:userName' element={<User />} />
-                <Route element={<NotFound />} />
+                <Route path='*' element={<NotFound />} />
               </Switch>
             </div>
           </div>
