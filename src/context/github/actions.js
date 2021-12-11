@@ -1,10 +1,21 @@
 import axios from 'axios';
+let githubClientId;
+let githubClientSecret;
+
+if (process.env.NODE_ENV !== 'production') {
+    githubClientId = process.env.REACT_APP_GITHUB_CLIENT_ID;
+    githubClientSecret = process.env.REACT_APP_GITHUB_CLIENT_SECRET;
+} else {
+    githubClientId = process.env.GITHUB_CLIENT_ID;
+    githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
+}
+
 
 // Search Users
 const searchUsers = async username => {
     // setLoading();
     const res = await axios
-        .get(`https://api.github.com/search/users?q=${username}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+        .get(`https://api.github.com/search/users?q=${username}&client_id=${githubClientId}&client_secret=${githubClientSecret}`);
     return res.data.items;
 
 };
@@ -12,7 +23,7 @@ const searchUsers = async username => {
 const getUser = async username => {
     // setLoading();
     const res = await axios
-        .get(`https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+        .get(`https://api.github.com/users/${username}?client_id=${githubClientId}&client_secret=${githubClientSecret}`);
 
     return res.data;
 
@@ -22,7 +33,7 @@ const getUser = async username => {
 const getUserRepos = async username => {
     // setLoading();
     const res = await axios
-        .get(`https://api.github.com/users/${username}/repos?per_page=5&sort=creted:asc&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+        .get(`https://api.github.com/users/${username}/repos?per_page=5&sort=creted:asc&client_id=${githubClientId}&client_secret=${githubClientSecret}`);
 
     return res.data;
 };
