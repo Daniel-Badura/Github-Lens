@@ -2,20 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-const ReposItem = ({ repo: { name, html_url } }) => {
+const ReposItem = ({ repo }) => {
 
     return (
         <div className="card text-center">
-            <h3>{name}</h3>
+            <h3>{repo.name}</h3>
+            <h5>{repo.description}</h5>
             <div>
-                <a href={html_url} className="btn btn-success btn-md my-1">Visit Repo</a>
+                <a href={repo.html_url} className="btn btn-success btn-md my-1">Visit Repo</a>
             </div>
         </div>
-    )
+    );
 
-}
+};
 
 ReposItem.propTypes = {
-    repo: PropTypes.object.isRequired
-}
-export default ReposItem
+    user: PropTypes.object.isRequired
+};
+export default ReposItem;

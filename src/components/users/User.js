@@ -1,33 +1,68 @@
-import React, { Fragment, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import Spinner from 'prop-types';
-import PropTypes from 'prop-types';
+import React, { useEffect, useContext } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import Spinner from '../layout/Spinner';
 import Repos from '../repos/Repos';
+import GithubContext from '../../context/github/githubContext';
+import { getUser, getUserRepos } from '../../context/github/actions';
+import { GET_USER, GET_REPOS, SET_LOADING } from '../../context/types';
 
 
-const User = ({ user, getUser, getUserRepos, loading, repos, match }) => {
-    let { login } = useParams();
-    useEffect(() => {
-        getUser(login);
-        getUserRepos(login);
-        // eslint-disable-next-line
-    }, []);
+
+
+const User = () => {
+    // useEffect(() => {
+    //     dispatch({ type: SET_LOADING });
+    //     get;
+    //     getUserAndRepos(userName).then((res) =>
+    //         dispatch({ type: GET_USER_AND_REPOS, payload: res })
+    //     );
+    // }, [dispatch, userName]);   
     const {
-        name,
-        avatar_url,
-        location,
-        bio,
-        company,
-        blog,
-        html_url,
-        followers,
-        following,
-        public_repos,
-        public_gists,
-        hireable
-    } = user;
+        user: {
+            name,
+            avatar_url,
+            location,
+            bio,
+            login,
+            html_url,
+            followers,
+            following,
+            public_gists,
+            public_repos,
+            hireable,
+            blog,
+            company
+        },
+        loading,
+        dispatch,
+        repos
+    } = useContext(GithubContext);
+
+    // useEffect(() => {
+    //     getUser(login);
+    //     getUserRepos(login);
+    //     
+    // }, []);
+
+    const { userName } = useParams();
+
+    useEffect(() => {
+        dispatch({ type: SET_LOADING });
+        getUser(userName).then((res) =>
+            dispatch({ type: GET_USER, payload: res })
+        );
+
+    }, [dispatch, userName]);
+    useEffect(() => {
+        dispatch({ type: SET_LOADING });
+        getUserRepos(userName).then((res) =>
+            dispatch({ type: GET_REPOS, payload: res })
+        );
+    }, [dispatch, userName]);
+
+
     if (loading) return <Spinner />;
-    return <Fragment>
+    return <>
         <Link to='/' className="btn btn-light">
             Back to Search
         </Link>
@@ -45,26 +80,26 @@ const User = ({ user, getUser, getUserRepos, loading, repos, match }) => {
             </div>
             <div>
                 {bio && (
-                    <Fragment>
+                    <>
                         <h3>Bio</h3>
                         <p>{bio}</p>
-                    </Fragment>
+                    </>
                 )}
                 <a href={html_url} className="btn btn-dark my-1">
                     Visit Github Profile
                 </a>
                 <ul>
                     <li>
-                        {login && <Fragment>
-                            <strong>Username: </strong> {login}</Fragment>}
+                        {login && <>
+                            <strong>Username: </strong> {login}</>}
                     </li>
                     <li>
-                        {company && <Fragment>
-                            <strong>Company: </strong> {company}</Fragment>}
+                        {company && <>
+                            <strong>Company: </strong> {company}</>}
                     </li>
                     <li>
-                        {blog && <Fragment>
-                            <strong>Website: </strong> {blog}</Fragment>}
+                        {blog && <>
+                            <strong>Website: </strong> {blog}</>}
                     </li>
                 </ul>
 
@@ -77,14 +112,7 @@ const User = ({ user, getUser, getUserRepos, loading, repos, match }) => {
             <div className="badge badge-dark">Public Gists: {public_gists} </div>
         </div>
         <Repos repos={repos} />
-    </Fragment>;
-};
-User.propTypes = {
-    loading: PropTypes.bool,
-    user: PropTypes.object.isRequired,
-    repos: PropTypes.array.isRequired,
-    getUser: PropTypes.func.isRequired,
-    getUserRepos: PropTypes.func.isRequired
+    </>;
 };
 export default User;
 
